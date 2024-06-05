@@ -71,18 +71,18 @@ class ComplexResponse extends Response
     public function addEvent(EventMessage $event)
     {
         // not eventlist (start/complete)
-        if (stristr($event->getEventList(), 'start') === false
-            && stristr($event->getEventList(), 'complete') === false
-            && stristr($event->getName(), 'complete') === false
+        if (stristr($event->getEventList() ?? '', 'start') === false
+            && stristr($event->getEventList() ?? '', 'complete') === false
+            && stristr($event->getName() ?? '', 'complete') === false
         ) {
             $unknownevent = "PAMI\\Message\\Event\\UnknownEvent";
             if (!($event instanceof $unknownevent)) {
                 // Handle TableStart/TableEnd Differently
-                if (stristr($event->getName(), 'TableStart') != false) {
+                if (stristr($event->getName() ?? '', 'TableStart') != false) {
                     $this->temptable = array();
                     $this->temptable['Name'] = $event->getTableName();
                     $this->temptable['Entries'] = array();
-                } elseif (stristr($event->getName(), 'TableEnd') != false) {
+                } elseif (stristr($event->getName() ?? '', 'TableEnd') != false) {
                     if (!is_array($this->tables)) {
                         $this->tables = array();
                     }
@@ -100,8 +100,8 @@ class ComplexResponse extends Response
             }
         }
         // finish eventlist
-        if (stristr($event->getEventList(), 'complete') != false
-            || stristr($event->getName(), 'complete') != false
+        if (stristr($event->getEventList() ?? '', 'complete') != false
+            || stristr($event->getName() ?? '', 'complete') != false
         ) {
             $this->completed = true;
         }
