@@ -516,7 +516,7 @@ class ClientImpl implements IClient
             }
             $response = $this->getRelated($message);
             if ($response != false) {
-                $this->_lastActionId = false;
+                $this->lastActionId = false;
                 return $response;
             }
         }
